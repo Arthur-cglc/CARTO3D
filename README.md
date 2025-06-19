@@ -19,10 +19,8 @@
   
 ## 1. Description
  
-Ce projet constitue un pipeline semi-automatisé de traitement et de visualisation 3D des résultats neutroniques issus de simulations MCNP. L’objectif est de passer, en quelques étapes guidées, de fichiers bruts `.msht` à des visualisations exploitables dans ParaView, en utilisant FreeCAD pour l’import géométrique et des scripts Python pour orchestrer le tout.
-
-Il s'adresse au service calcul de l'entreprise CEGELEC-CEM, et l'équipe sûreté/radioprotection. 
-
+Ce projet constitue un pipeline semi-automatisé de traitement et de visualisation 3D des résultats neutroniques issus de simulations MCNP. L’objectif est de passer, en quelques étapes guidées, de fichiers bruts `.msht` à des visualisations exploitables dans ParaView, en utilisant FreeCAD pour l’import géométrique et des scripts Python pour orchestrer le tout.  
+Il s'adresse au service calcul de l'entreprise CEGELEC-CEM, et l'équipe sûreté/radioprotection.  
 Le flux de traitement suit la séquence suivante :
 
 **MCNP (.msht) + FreeCAD (.FCStd)** ⟶ **Script Python (main.py)** ⟶ **Conversion en VTK et STEP respectivement** ⟶ **Ouverture automatique dans ParaView** ⟶ **Application de `vue_brute.py`** ⟶ **Visualisation et post-traitement libre à l'aide des macros proposées**
@@ -37,13 +35,13 @@ Le flux de traitement suit la séquence suivante :
 
 Ce livrable est un dossier de travail appelé **`CARTO3D/`**. Il contient l’ensemble des éléments nécessaires à la procédure de post traitement :
 
-### `Convertisseur_Fichier_MSHT_to_vtk/`  
+### `Convertisseur_Fichier_MSHT_to_vtk/` 
 _Dossier contenant le convertisseur `./bin/Release/mt2vtk.exe` de MSHT vers VTK._
 
-### `input_files/`  
+### `input_files/` 
 _Dossier où l’on place les fichiers d’entrée FreeCAD (`.FCStd`) et MCNP (`.msht`). On y trouvera également la géométrie STEP, les fichiers contenant les résultats et erreurs sous VTK, et le CSV._
 
-### `scripts/`  
+### `scripts/`
 _Dossier contenant les scripts Python principaux :_
 
 * **`util.py`** : Contient les fonctions utilitaires et les chemins d’accès utilisés globalement. Toutes les macros et scripts y  accèdent via l’import `import util as u`. Il est **essentiel** de renseigner l’adresse d’installation de ParaView au début de ce fichier.
@@ -88,8 +86,7 @@ _Dossier contenant les macros à placer dans FreeCAD ou ParaView._
 
 * **`macro_isodose.py`** : _Crée des isodoses sous forme de surfaces 3D (isosurfaces) à partir de valeurs choisies, affichées dans un nouveau layout (même syntaxe que macro_iso_2D.py)._
 
-* **`macro_legende.py`** : _Gère les échelles de couleur et les titres des légendes :_
-
+* **`macro_legende.py`** : _Gère les échelles de couleur et les titres des légendes :_  
   * se placer dans le layout dans lequel la source d'interêt est affichée puis lancer la macro
   * entrer le nom de la source d'interêt (_exemples : pour recalibrer sur l'ensemble des valeurs, entrer MSHT dans le layout principal. Pour recalibrer sur une coupe particulière, entrer le nom de la coupe dans le layout de la coupe_)
   * Mode automatique (couvre toutes les valeurs de la source) : entrer 'A'. Mode manuel (plage définie par l’utilisateur) : entrer 'M'.
@@ -106,8 +103,8 @@ _Dossier contenant les macros à placer dans FreeCAD ou ParaView._
   * Entrer le nom souhaité pour la règle.
   * Il est ensuite possible de placer les points à la souris (touche `1`, `2`). Pour cela, cliquer sur la source `règle`(_via le nom donné_), cliquer dans la zone `Properties` encadrée en bleu, cocher `Show line`. Une fois les points correctement placés, cliquer sur `Apply`. 
 
-* **`macro_datas.py`** : _Permet de récupérer les donnees en un point de la géométrie. S'utilise en complément avec `Sonde`._
-  * Commencer par sélectionner avec la Sonde le point d'interêt. Pour cela, renseigner ses coordonnées (en mm !) ou utiliser la touche `P`. **Attention**, le point sélectionné est sur la surface directe, et pas en profondeur. Penser à toujours vérifier les coordonnées du point étudié. S'aider des plans de coupe peut être utile.
+* **`macro_datas.py`** : _Permet de récupérer les donnees en un point de la géométrie. S'utilise en complément avec `Sonde`._  
+  * Commencer par sélectionner avec la Sonde le point d'interêt. Pour cela, renseigner ses coordonnées (en mm !) ou utiliser la touche `P`. **Attention**, le point sélectionné est sur la surface directe, et pas en profondeur. Penser à toujours vérifier les coordonnées du point étudié. S'aider des plans de coupe peut être utile.  
   * Une fois le point correctement placé, lancer la macro. Le résultat s'affiche dans la fenêtre de dialogue `Output Messages`. 
   * De plus, le résultat est stocké dans un fichier `resultats_sonde.csv` dans le dossier `input_files`, créé lors de la première utilisation, puis modifié pour ajouter chaque résultat.
 
